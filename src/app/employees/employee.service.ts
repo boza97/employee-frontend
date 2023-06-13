@@ -6,13 +6,14 @@ import { Employee } from './employee';
 
 @Injectable()
 export class EmployeeService {
-  private apiUrl = `${environment.apiBaseUrl}/employee`;
+  private apiUrl = `${environment.apiBaseUrl}/employees`;
   private _employee = new BehaviorSubject<Employee>({
     id: 0,
     firstname: '',
     lastname: '',
     email: '',
   });
+  private _employees = new BehaviorSubject<Employee[]>([]);
 
   constructor(private httpClient: HttpClient) {}
 
@@ -20,9 +21,19 @@ export class EmployeeService {
     return this._employee.asObservable();
   }
 
+  get employees() {
+    return this._employees.asObservable();
+  }
+
   save(employee: Employee) {
     return this.httpClient
       .post<Employee>(this.apiUrl, employee)
       .pipe(tap(emp => this._employee.next(emp)));
+  }
+
+  getAll() {
+    return this.httpClient
+      .get<Employee[]>(this.apiUrl)
+      .pipe(tap(empArray => this._employees.next(empArray)));
   }
 }

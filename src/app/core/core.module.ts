@@ -1,9 +1,10 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
-  declarations: [NavbarComponent],
-  exports: [NavbarComponent],
+  declarations: [NavbarComponent, PageNotFoundComponent],
+  exports: [NavbarComponent, PageNotFoundComponent],
 })
 export class CoreModule {
   constructor(@Optional() @SkipSelf() core: CoreModule) {
